@@ -23,15 +23,6 @@ class User:
     def __init__(self, username):
         self.username = username
         self.count_of_messages = 1
-# func=lambda message: message.text[0] != '/'
-
-
-def procced_command(message, command, *args):
-    print(f"command: {command}, args: {args}")
-    if command == '/top':
-        send_data(get_top())
-    elif command == '/inactive':
-        send_data(get_top(True))
 
 
 @bot.message_handler(commands=['top'])
@@ -66,9 +57,6 @@ def on_message(message):
         bot.send_message(GROUP_ID, "Неперевершений голос!")
     if message.content_type != "text":
         return
-
-    if message.text != '':
-        procced_command(message, *message.text.split())
 
     if str(message.from_user.id) in data:
         data[str(message.from_user.id)]["username"] = message.from_user.username
