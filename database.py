@@ -10,7 +10,8 @@ def remove_user(user_id):
     pass
 
 
-
+def check_user_exist(user_id):
+    pass
 
 
 

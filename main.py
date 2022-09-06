@@ -1,4 +1,6 @@
 import telebot
+from telebot import  types
+
 import json
 import atexit
 import database
@@ -10,6 +12,35 @@ bot = telebot.TeleBot(TOKEN)
 ADMINS_ID = []
 GROUP_ID = cred.GROUP_TOKEN
 
+
+@bot.message_handler(commands=['start', 'info']) # початок діалогу з ботом
+def send_start_message(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.row_width = 1
+    markup.add(
+        types.InlineKeyboardButton("Зареєструватися", callback_data="register"),
+        types.InlineKeyboardButton("Інфо про реєстрацію", callback_data='register info'),
+        types.InlineKeyboardButton("Діскорд сервер", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    )
+
+    bot.send_message(message.chat.id, 'Привіт, я бот ФІКТ, і я допоможу тобі бути вкурсі новин'
+                                      ' та познайомитися з новими друзями'
+                                      ', за допомогою команд ти зможеш зареєструвати себе в системі знаймств'
+                                    , reply_markup=markup)
+
+
+@bot.callback_query_handler(lambda query: query.data == 'register')
+def register(query): # реєстрація
+    bot.send_message(query.message.chat.id, 'Congrats you started register')
+
+    # потрібно описати етапи реєстрації
+
+
+@bot.callback_query_handler(lambda query: query.data == 'register info')
+def register(query):  # реєстрація
+    bot.send_message(query.message.chat.id, 'Після реєстрації можна добавити додаткову інформцію про себе')
+
+    # потрібно описати етапи реєстрації
 
 @bot.message_handler(commands=['getform'])
 def send_form(message):
@@ -50,6 +81,22 @@ atexit.register(at_exit)
 
 print("bot started")
 bot.polling()
+
+
+
+# Привіт, я бот ФІКТ, і я допоможу тобі бути вкурсі новин, та познайомитися з новими друзями
+# за допомогою команд ти зможеш зареєструвати себе в системі знаймств,
+# не переживай ці дані ми ніяк не застосовуємо, це просто твоя анкета)
+# напиши команду /set description і після цього відправ короткий опис про себе)
+# напиши команду /set form і після цього відправ заповнену форму
+
+# лінк на наш сервер дс
+# лінк на телеграм группу
+
+
+
+
+
 
 
 # TODO: реєстрація юзера в системі, а саме, його опис, стать і заповнена форма (це буде по бажанню)
