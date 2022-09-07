@@ -1,6 +1,7 @@
 import sqlite3
 
 
+
 # контакт дс, про себе, підписка на новини та івенти, стать
 def add_user(user):
     sql_command(f"INSERT INTO users VALUES ({user.telegram_id})")
